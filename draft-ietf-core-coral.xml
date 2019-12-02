@@ -1779,6 +1779,118 @@
 
         </section>
 
+        <section>
+
+          <name>FETCH Requests</name>
+
+          <t>
+            A FETCH request with a CoRAL document enclosed in the request
+            payload requests the server to perform a query operation (described
+            by the CoRAL document) over some set of data available at the target
+            resource.
+
+            The payload returned in response to a FETCH is not a representation
+            of the target resource but usually contains a subset thereof.
+          </t>
+
+          <t>
+            The retrieval context and the base URI of a CoRAL document in a
+            FETCH are the request URI of the request.
+          </t>
+
+          <t>
+            The query is performed as follows: Assuming the data set can be
+            represented as a list of CoRAL elements ("input document"), the
+            CoRAL document in a FETCH ("query document") is used to select and
+            return a subset of those elements. The query document is interpreted
+            as a set of patterns that get matched against the elements in the
+            input document. The result contains all elements E, in sequence, of
+            the input document for which a pattern P exists in the query
+            document such that E matches P.
+          </t>
+
+          <t>
+            Links, forms, form fields, embedded representations, and
+            representation metadata match as follows:
+          </t>
+
+          <ul>
+            <li>
+              A link E matches a link P if both have the same link relation
+              type, the link target of E matches the link target of P, and for
+              each nested element P' in P there is a nested element E' in E such
+              that E' matches P'.
+            </li>
+            <li>
+              A form E matches a form P if both have the same operation type,
+              for each form field P' in P there is a form field E' in E such
+              that E' matches P', and for each form field E' in E there is a
+              form field P' in P such that E' matches P'.
+            </li>
+            <li>
+              A form field E matches a form field P if both have the same form
+              field type and the form field value of E matches the form field
+              value of P.
+            </li>
+            <li>
+              An embedded representation E matches an embedded represenation P
+              if both consist of the same sequence of bytes, and for each
+              metadata item P' in P there is a metadata item E' in E such that
+              E' matches P'.
+            </li>
+            <li>
+              A metadata item E matches a metadata item P if both have the same
+              metadata name and the metadata value of E matches the metadata
+              value of P.
+            </li>
+            <li>
+              Nothing else matches.
+            </li>
+          </ul>
+
+          <t>
+            Link targets, form field values, and representation metadata values
+            match as follows:
+          </t>
+
+          <ul>
+            <li>
+              A URI reference X matches a URI reference Y if X and Y are
+              equivalent after resolving them to a URI.
+            </li>
+            <li>
+              A Boolean value X matches a Boolean value Y if X equals Y.
+            </li>
+            <li>
+              An integer X matches an integer Y if X equals Y.
+            </li>
+            <li>
+              A floating-point number X matches a floating-point number Y if X
+              equals Y.
+            </li>
+            <li>
+              A date/time value X matches a date/time value Y if X equals Y
+              after converting them to the same time zones (e.g., both in UTC).
+            </li>
+            <li>
+              A byte string X matches a byte string Y if X equals Y
+              byte-by-byte.
+            </li>
+            <li>
+              A text string X matches a text string Y if X equals Y
+              codepoint-by-codepoint.
+            </li>
+            <li>
+              A URI reference, Boolean value, integer, floating-point number,
+              date/time value, byte string, or text string matches null.
+            </li>
+            <li>
+              Nothing else matches.
+            </li>
+          </ul>
+
+        </section>
+
       </section>
 
       <section>
